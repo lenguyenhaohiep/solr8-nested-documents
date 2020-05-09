@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="application" version="1.6">
+
+    <!-- ## Fields definition -->
+    <!-- Base fields -->
+    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+    <field name="_version_" type="plong" indexed="false" stored="false" multiValued="false" docValues="true"/>
+    <uniqueKey>id</uniqueKey>
+
+    <!-- ## Nested documents -->
+    <field name="_root_" type="string" indexed="true" stored="true" docValues="false" />
+    <fieldType name="nest_path" class="solr.NestPathField" />
+    <field name="_nest_path_" type="nest_path" stored="true"/>
+
+    <field name="doc_type" type="string" multiValued="false" indexed="true" required="true" stored="true" />
+    <dynamicField name="*_str" type="string" stored="true" indexed="true"/>
+
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+    <fieldType name="plong" class="solr.LongPointField"/>
+</schema>

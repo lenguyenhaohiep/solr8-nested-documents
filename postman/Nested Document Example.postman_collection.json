@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "fa2e9242-5ea6-46f6-8f98-d347c4d97458",
+		"name": "Nested Document Example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Index nested documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n\t{\r\n\t\t\"id\": \"ocean1\",\r\n\t\t\"doc_type\": \"ocean\",\r\n\t\t\"name_str\": \"Pacific\",\r\n\t\t\"fishes\": [\r\n\t\t\t{\r\n\t\t\t\t\"id\": \"fish1\",\r\n\t\t\t\t\"doc_type\": \"fish\",\r\n\t\t\t\t\"type_str\": \"Clown Fish\",\r\n\t\t\t\t\"name_str\": \"Nemo\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"id\": \"fish2\",\r\n\t\t\t\t\"doc_type\": \"fish\",\r\n\t\t\t\t\"type_str\": \"Blue Tang\",\r\n\t\t\t\t\"name_str\": \"Dory\"\r\n\t\t\t}\r\n\t\t],\r\n\t\t\"crabs\": [\r\n\t\t\t{\r\n\t\t\t\t\"id\": \"crab1\",\r\n\t\t\t\t\"doc_type\": \"crab\",\r\n\t\t\t\t\"type_str\": \"King Crab\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\"id\": \"crab2\",\r\n\t\t\t\t\"doc_type\": \"crab\",\r\n\t\t\t\t\"type_str\": \"Blue Crab\"\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Index nested documents with metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n\t{\r\n\t\t\"id\": \"ocean2\",\r\n\t\t\"doc_type\": \"ocean\",\r\n\t\t\"name_str\": \"Atlantic\",\r\n\t\t\"fishes\": [\r\n\t\t\t{\r\n\t\t\t\t\"id\": \"fish3\",\r\n\t\t\t\t\"doc_type\": \"fish\",\r\n\t\t\t\t\"type_fish_str\": \"Garfish\",\r\n\t\t\t\t\"name_fish_str\": \"Bob\"\r\n\t\t\t}\r\n\t\t]\r\n\t}\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query nested documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"*:*\",\n\t\"filter\": \"doc_type:ocean\",\n\t\"fields\": \"*,[child]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve fishes only",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"doc_type:ocean\",\n\t\"fields\": \"id,name_str,type_str,fishes,[child childFilter=doc_type:fish fl=type_str]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve fishes using metadata",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"doc_type:ocean AND id:ocean2\",\n\t\"fields\": \"*_fish_*,fishes,[child childFilter=doc_type:fish fl=name_fish_str]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

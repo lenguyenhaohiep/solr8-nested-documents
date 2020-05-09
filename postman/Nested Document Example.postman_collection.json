@@ -154,6 +154,132 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Add new fishes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"id\": \"ocean1\",\n\t\"fishes\": {\"add\": [\n\t\t{\n\t\t\t\"id\": \"fish4\",\n\t\t\t\"doc_type\": \"fish\",\n\t\t\t\"name_str\": \"Doe\"\n\t\t},\n\t\t{\n\t\t\t\"id\": \"fish5\",\n\t\t\t\"doc_type\": \"fish\",\n\t\t\t\"name_str\": \"Hans\"\n\t\t}\n\t]}\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete fishes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"id\": \"ocean1\",\n\t\"fishes\": {\"remove\": [\n\t\t{\n\t\t\t\"id\": \"fish4\"\n\t\t},\n\t\t{\n\t\t\t\"id\": \"fish5\"\n\t\t}\n\t]}\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update fishes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"id\": \"fish4\",\n\t\t\"name_str\": {\"set\": \"Bobby\"}\n\t},\n\t{\n\t\t\"id\": \"fish5\",\n\t\t\"name_str\": {\"set\": \"Benny\"}\n\t}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/update?_route_=ocean1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"update"
+					],
+					"query": [
+						{
+							"key": "_route_",
+							"value": "ocean1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Multiple actions on both parent and nested documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\t\"id\": \"ocean1\",\n\t\"surface_str\": {\"set\": \"65,250,000 km2\"},\n\t\"fishes\": {\"add\": [\n\t\t{\n\t\t\t\"id\": \"fish6\",\n\t\t\t\"doc_type\": \"fish\",\n\t\t\t\"name_str\": \"Doe\"\n\t\t}\n\t]}\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"update"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

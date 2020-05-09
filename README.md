@@ -10,6 +10,7 @@ Run the container
 ```
 docker run --rm --volume="$PWD/cores:/var/solr/data" -it -p 8983:8983 --name solr-example solr:8.2.0
 ```
+Local solr will be accessible in `http://localhost:8983/solr/#/`.
 
 Stop container
 ```
@@ -31,4 +32,4 @@ Import the postman collection in `postman` folder.
 More details in:
 - [Index nested documents with Solr 8](https://lenguyenhaohiep.github.io/solr/Index-nested-documents-Solr-8/)
 - [Search and Faceting on nested documents with Solr 8](https://lenguyenhaohiep.github.io/solr/search-facet-nested-documents/)
-- [Use atomic update on nested document with Solr 8](https://lenguyenhaohiep.github.io/solr/atomic-update-nested-documents/)
+- [Use atomic update on nested documents with Solr 8](https://lenguyenhaohiep.github.io/solr/atomic-update-nested-documents/)

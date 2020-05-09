@@ -280,6 +280,156 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Search parents with children filtering",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"{!parent which=doc_type:ocean}(type_str:\\\"Clown Fish\\\" AND name_str:Nemo)\",\n\t\"fields\": \"*,[child]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search parents with both parent and children filtering",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"name_str:Pacific AND {!parent which=doc_type:ocean}name_str:Nemo\",\n\t\"fields\": \"*,[child]\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Faceting on nested documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"*:*\",\n  \"filter\": [\n    \"name_str:Pacific\"\n  ],\n  \"limit\": 0,\n  \"facet\": {\n    \"fish_types\": {\n      \"type\": \"terms\",\n      \"field\": \"type_str\",\n      \"domain\": {\n      \t\"blockChildren\": \"doc_type:ocean\",\n      \t\"filter\": \"doc_type:fish\"\n      }\n    },\n    \"crab_types\": {\n      \"type\": \"terms\",\n      \"field\": \"type_str\",\n      \"domain\": {\n      \t\"blockChildren\": \"doc_type:ocean\",\n      \t\"filter\": \"doc_type:crab\"\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Faceting on nested documents and parent together",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"*:*\",\n  \"limit\": 0,\n  \"facet\": {\n    \"ocean_names\": {\n      \"type\": \"terms\",\n      \"field\": \"name_str\",\n      \"domain\": {\n      \t\"blockParent\": \"doc_type:ocean\"\n      }\n    },\n    \"fish_types\": {\n      \"type\": \"terms\",\n      \"field\": \"type_str\",\n      \"domain\": {\n      \t\"blockChildren\": \"doc_type:ocean\",\n      \t\"filter\": \"doc_type:fish\"\n      }\n    },\n    \"crab_types\": {\n      \"type\": \"terms\",\n      \"field\": \"type_str\",\n      \"domain\": {\n      \t\"blockChildren\": \"doc_type:ocean\",\n      \t\"filter\": \"doc_type:crab\"\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Faceting on nested documents and parent together with excluding",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"query\": \"*:*\",\n  \"filter\": [\n  \t\"{!tag=ocean_name}name_str:Pacific\",\n  \t\"{!tag=fish_type parent which=doc_type:ocean}type_str:\\\"Clown Fish\\\"\"\n   ],\n  \"limit\": 0,\n  \"facet\": {\n    \"ocean_names\": {\n      \"type\": \"terms\",\n      \"field\": \"name_str\",\n      \"domain\": {\n      \t\"blockParent\": \"doc_type:ocean\",\n    \t  \"excludeTags\": \"ocean_name\"\n      }\n    },\n    \"fish_types\": {\n      \"type\": \"terms\",\n      \"field\": \"type_str\",\n      \"domain\": {\n      \t\"blockChildren\": \"doc_type:ocean\",\n      \t\"filter\": \"doc_type:fish\",\n      \t\"excludeTags\": \"fish_type\"\n      }\n    }\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

@@ -156,6 +156,96 @@
 			"response": []
 		},
 		{
+			"name": "Query nested documents - using nest path",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"*:*\",\n\t\"filter\": \"-_nest_path_:*\",\n\t\"fields\": \"*,[child]\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve fishes only - using nest path",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"-_nest_path_:*\",\n\t\"fields\": \"*,[child childFilter=_nest_path_:/fishes]\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve fishes using metadata - using nest path",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\": \"-_nest_path_:*\",\n\t\"fields\": \"name_str,type_str,fishes,[child childFilter=_nest_path_:/fishes fl=type_str]\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8983/solr/example/select",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8983",
+					"path": [
+						"solr",
+						"example",
+						"select"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Add new fishes",
 			"request": {
 				"method": "POST",
